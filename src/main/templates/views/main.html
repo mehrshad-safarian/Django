@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 {% extends "base/base.html" %}
-<body class="h-100 d-flex flex-column">
-<!-- Full-height flex layout to keep footer at the bottom -->
 
-    <main class="flex-shrink-0">
-        <!-- Main content area that prevents shrinking in flex layout -->
-        <h1>Welcome to {{ name }} </h1>
-        <p>Tehran Luxury Cars – Premium & Exotic Vehicles Marketplace</p>
-    </main>
-
-
-</body>
+{% block 'body' %}
+<h1>Welcome to {{ name }} </h1>
+{% endblock  %}
+{% block 'footer' %}
+<footer class="bg-dark text-light py-4 mt-auto">
+  <div class="container text-center">
+    <p class="mb-1">&copy; 2025 Tehran Luxury Cars. All rights reserved.</p>
+    <p class="mb-0">
+      <a href="#" class="text-decoration-none text-light">Luxury Inventory</a> |
+      <a href="#" class="text-decoration-none text-light">Buy a Car</a> |
+      <a href="#" class="text-decoration-none text-light">Sell Your Car</a> |
+      <a href="#" class="text-decoration-none text-light">Contact</a>
+    </p>
+  </div>
+</footer>
+{% endblock 'footer' %}
