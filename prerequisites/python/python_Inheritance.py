@@ -33,3 +33,30 @@ print(student1.is__passing())
 # Student is a special Person that also has a grade.
 # super().__init__() is how Student borrows Person's variables.
 # is__passing() checks if the grade is high enough.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
