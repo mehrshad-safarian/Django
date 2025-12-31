@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en" class="h-100">
 <head>
     <meta charset="utf-8">
@@ -12,11 +12,8 @@
     <!-- Specifies the website author or brand name -->
     <title>Tehran Luxury Cars</title>
     <!-- Sets the page title shown in the browser tab -->
-
     <!-- Bootstrap core css -->
     <link href = "{% static 'css/bootstrap.min.css' %}"  rel = "stylesheet" >
-    
-
 </head>
 
 <body>
@@ -34,6 +31,7 @@
         <p class="mb-1">
             Tehran Luxury Cars  Buy & Sell Luxury & Exotic Cars
         </p>
+        <p class="mb-0">© Copyright {% now 'Y' %} <a href="">TehranLuxuryCars</a></p>
     </div>
 </footer>
 {% endblock  %}
