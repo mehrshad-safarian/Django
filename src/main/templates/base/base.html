@@ -3,38 +3,35 @@
 <html lang="en" class="h-100">
 <head>
     <meta charset="utf-8">
-    <!-- Defines the character encoding to support all languages and symbols -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Makes the website responsive on all devices -->
     <meta name="description" content="Tehran Luxury Cars – Buy & Sell Premium and Luxury Cars in Tehran">
-    <!-- Short description for SEO and search engine results -->
     <meta name="author" content="Tehran Luxury Cars">
-    <!-- Specifies the website author or brand name -->
     <title>Tehran Luxury Cars</title>
-    <!-- Sets the page title shown in the browser tab -->
+    
     <!-- Bootstrap core css -->
-    <link href = "{% static 'css/bootstrap.min.css' %}"  rel = "stylesheet" >
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 
 <body>
     {% block 'body' %}
     {% endblock %}
 </body>
+
 {% block 'footer' %}
 <footer class="footer mt-auto text-muted bg-dark py-5">
-<!-- Sticky footer with dark background and spacing -->
     <div class="container">
-    <!-- Centers content and limits the maximum width -->
         <p class="float-end mb-1">
             Powered by <a href="https://www.djangoproject.com/" target="_blank">Django</a>
         </p>
         <p class="mb-1">
-            Tehran Luxury Cars  Buy & Sell Luxury & Exotic Cars
+            Tehran Luxury Cars – Buy & Sell Luxury & Exotic Cars
         </p>
         <p class="mb-0">© Copyright {% now 'Y' %} <a href="">TehranLuxuryCars</a></p>
     </div>
 </footer>
-{% endblock  %}
-
+{% endblock %}
     
 </html>
