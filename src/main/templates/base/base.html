@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 {% load static %}
+
 <html lang="en" class="h-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tehran Luxury Cars – Buy & Sell Premium and Luxury Cars in Tehran">
     <meta name="author" content="Tehran Luxury Cars">
+    {% block 'title' %}
     <title>Tehran Luxury Cars</title>
+    {% endblock %}
     
     <!-- Bootstrap core css -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
 </head>
 
 <body>
