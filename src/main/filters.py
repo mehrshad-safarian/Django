@@ -6,4 +6,4 @@ class ListingFilter(django_filters.FilterSet):
     class  Meta:
         model = Listing
         fields = {'brand': {'exact'}, 'transmission': {
-            'exact'}, 'mileage':{'it'}, 'model':{'icontains'}}
+            'exact'}, 'milage':{'lt'}, 'model':{'icontains'}}
