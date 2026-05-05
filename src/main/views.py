@@ -6,6 +6,7 @@ from django.contrib import messages
 from .forms import ListingForm
 
 from Users.forms import LocationForm
+from .filters import ListingFilter
 
 def main_view(request):
     return render(request, 'views/main.html', {'name': 'Tehran Luxury Cars'})
@@ -14,8 +15,10 @@ def main_view(request):
 @login_required
 def home_view(request):
     listings = Listing.objects.all()
+    listing_filter = ListingFilter(request.GET, queryset=listings)
     context = {
         'listings': listings,
+        'listing_filter': listing_filter,
     }
     return render(request, "views/home.html", context)
 

@@ -13,7 +13,8 @@ CARS_BRANDS = (
     ('honda', 'Honda'),
     ('toyota', 'Toyota'),
     ('chevrolet', 'Chevrolet'),
-    ('porsche', 'Porsche')
+    ('porsche', 'Porsche'),
+    ('mclaren', 'McLaren')
 )
 
 TRANSMISSION_OPTIONS = (
