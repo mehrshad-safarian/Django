@@ -17,7 +17,7 @@ class Listing(models.Model):
     description = models.TextField()
     engine = models.CharField(max_length=24,)
     transmission = models.CharField(max_length=24, choices=TRANSMISSION_OPTIONS, default=None)
-    Location = models.OneToOneField(Location, on_delete=models.SET_NULL, null=True)
+    location = models.OneToOneField(Location, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to=user_listing_path)
 
     def __str__(self):
