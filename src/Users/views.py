@@ -65,19 +65,28 @@ class Profileview(View):
                                                       'profile_form': profile_form,
                                                       'location_form': location_form,
                                                       'user_listings': user_listings, })
-    def post(self,request):
+    def post(self, request):
         user_listings = Listing.objects.filter(seller=request.user.profile)
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         location_form = LocationForm(request.POST, instance=request.user.profile.location)
+
         if user_form.is_valid() and profile_form.is_valid() and location_form.is_valid():
             user_form.save()
-            profile_form.save()
             location_form.save()
+
+            profile = profile_form.save(commit=False)  # don't hit DB yet
+            if request.POST.get('photo-clear'):         # user checked clear
+                if request.user.profile.photo:
+                    request.user.profile.photo.delete(save=False)  # delete file from disk
+                profile.photo = None                    # set field to None
+            profile.save()                              # now hit DB
+
             messages.success(request, 'Profile Updated Successfully!')
         else:
             messages.error(request, 'Error Updating Profile')
+
         return render(request, 'views/profile.html', {'user_form': user_form,
-                                                      'profile_form': profile_form,
-                                                      'location_form': location_form,
-                                                      'user_listings': user_listings, })
+                                                    'profile_form': profile_form,
+                                                    'location_form': location_form,
+                                                    'user_listings': user_listings, })

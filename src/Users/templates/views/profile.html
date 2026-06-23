@@ -16,17 +16,26 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col-6">
-                    {{user_form|crispy}}
-                    {{profile_form|crispy}}
+                    {{ user_form|crispy }}
+
+                    {# Photo rendered manually — bypasses crispy so your widget preview works #}
+                    <div class="mb-3 text-center">
+                        <label class="form-label"><strong>Photo</strong></label><br>
+                        {{ profile_form.photo }}
+                    </div>
+
+                    {# Rest of profile form (bio, phone_number) via crispy #}
+                    {% crispy profile_form %}
                 </div>
                 <div class="col-6">
-                    {{location_form|crispy}}
+                    {{ location_form|crispy }}
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
         </form>
     </div>
+
     <div class="container px-4">
         <div class="row g-4 py-5">
             <div class="col d-flex align-items-start">
