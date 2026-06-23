@@ -65,29 +65,46 @@ def listing_view(request, id):
 @login_required
 def edit_view(request, id):
     try:
+        # Get the listing object from DB using ID
         listing = Listing.objects.get(id=id)
+        # Safety check (redundant, but kept from course style)
         if listing is None:
             raise Exception
+        # If user submits the form
         if request.method == 'POST':
+            # Bind submitted data to forms
             listing_form = ListingForm(request.POST, request.FILES, instance=listing)
             location_form = LocationForm(request.POST, instance=listing.location)
-            if listing_form.is_valid and location_form.is_valid:
-                listing_form.save()
-                location_form.save()
+            # Validate both forms
+            if listing_form.is_valid() and location_form.is_valid():
+                # Save location first (updates or creates location object)
+                location = location_form.save()
+                # Save listing but don't commit yet (we need to modify it first)
+                listing = listing_form.save(commit=False)
+                # IMPORTANT: manually link listing to updated location
+                listing.location = location
+                # Now save final listing object
+                listing.save()
+                # Success message
                 messages.info(request, f'Listing {id} updated successfully!')
                 return redirect('home')
             else:
-                messages.error(request, f'An error occured while trying to update listings.')
-                return reload()
+                # If validation fails, show error and re-render page
+                messages.error(request, 'An error occurred while trying to update listings.')
+                return render(request, 'views/edit.html', context)
         else:
+            # GET request → show form with existing data
             listing_form = ListingForm(instance=listing)
             location_form = LocationForm(instance=listing.location)
+        # Send forms to template
         context = {
             'location_form': location_form,
             'listing_form': listing_form
         }
         return render(request, 'views/edit.html', context)
     except Exception as e:
+        # Handle unexpected errors (DB errors, missing listing, etc.)
         messages.error(
-            request, f'An error occured while trying to access the edit page.')
+            request, 'An error occurred while trying to access the edit page.'
+        )
         return redirect('home')
