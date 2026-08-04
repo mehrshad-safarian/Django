@@ -32,7 +32,22 @@
                 {% endif %}
             </div>
             <small class="text-muted">{{ listing.updated_at|date:"Y-m-d" }}</small>
-            <button type="button" class="btn btn-secondary">;-)</button>
+            <button id="like-{{ listing.id }}" type="button" value="like" class="btn btn-secondary">;-)</button>
         </div>
     </div>
 </div>
+
+<script>
+    $("#like-{{ listing.id }}").click(function(){
+        $.ajax({
+            type: "POST",
+            url: "{% url 'like_listing' id=listing.id %}",
+            data: { 'csrfmiddlewaretoken': '{{csrf_token}}' },
+            dataType: "json",
+            success: function(r){
+                alert(r)
+            },
+            error: function(rs, e){}
+        });
+    })
+</script>
