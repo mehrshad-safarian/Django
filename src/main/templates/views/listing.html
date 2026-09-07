@@ -99,4 +99,56 @@
         </div>
     </div>
 </main>
+
+<script>
+    $("#sendEmail").click(function () {
+
+        let button = $(this);
+
+        button.prop("disabled", true);
+        button.text("Sending...");
+
+        $.ajax({
+            type: "POST",
+
+            url: "{% url 'inquire_listing' id=listing.id %}",
+
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+
+            dataType: "json",
+
+            success: function (r) {
+
+                if (r.success) {
+
+                    button.text("Email Sent!");
+
+                    alert(
+                        "Email sent successfully!\n\n" +
+                        "Please do not send another email for this listing."
+                    );
+
+                } else if (r.already_sent) {
+
+                    button.text("Already Sent");
+
+                    alert(
+                        "You have already sent an email for this listing.\n\n" +
+                        "Please do not send another email."
+                    );
+                }
+            },
+
+            error: function (rs, e) {
+
+                button.prop("disabled", false);
+                button.text("Send Email");
+
+                alert("Something went wrong!");
+            }
+        });
+    });
+</script>
 {% endblock %}
