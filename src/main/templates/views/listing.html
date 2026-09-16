@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block 'title' %}
-<title>TehranLuxuryCars.Listing<!---->Listing
+<title>TehranLuxuryCars.Listing
 </title>
 {% endblock %}
 {% block 'body' %}
@@ -80,7 +80,13 @@
                                     {{listing.location.Zip_Code }} </li>
                             </ul>
                             <button
-                                class="w-100 btn btn-lg btn-outline-primary my-3">{{listing.seller.phone_number}}</button>
+                                class="w-100 btn btn-lg btn-outline-primary my-3">
+                                {% if listing.seller.phone_number %}
+                                {{listing.seller.phone_number}}
+                                {% else %}
+                                No Phone!
+                                {% endif %}
+                            </button>
                             <button id="sendEmail" class="w-100 btn btn-lg btn-outline-primary">Send Email</button>
                         </div>
                     </div>
