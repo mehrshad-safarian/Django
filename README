@@ -1,0 +1,1092 @@
+# FMS — Tehran Luxury Cars
+
+**FMS (Tehran Luxury Cars)** is a full-stack luxury and exotic car marketplace built with **Django** and **Bootstrap**.
+
+The project allows users to create and manage vehicle listings, maintain personal profiles, browse and filter available cars, save listings through a like system, and send inquiries through email.
+
+The main focus of the project is a structured **Django backend**, including user/profile management, Django Signals, Model Forms, filtering, location data, UUID-based models, image handling, authentication, and a customized administration panel.
+
+---
+
+## 🇬🇧 English
+
+### Overview
+
+FMS is a responsive car marketplace designed for buying and selling premium, luxury, and exotic vehicles.
+
+Users can create an account, manage their profile, publish vehicle listings, edit their listings, browse available vehicles, filter listings based on multiple criteria, like cars, and contact sellers through the integrated email inquiry system.
+
+The project was built with a strong focus on **Django backend architecture**, while the frontend uses **Bootstrap** to provide a responsive interface across desktop and mobile devices.
+
+---
+
+## ✨ Features
+
+### 👤 User & Profile System
+
+- User registration and authentication
+- Login and logout
+- Dedicated user profiles
+- Profile editing
+- User profile information connected automatically to the corresponding user
+- Profile-based listing management
+- Liked listings displayed in the user's profile
+- User/profile relationship handled using **Django Signals**
+
+### 🚗 Vehicle Listings
+
+Authenticated users can:
+
+- Create vehicle listings
+- Edit their own listings
+- View detailed vehicle information
+- Upload vehicle images
+- Provide vehicle specifications
+- Add location information
+- View seller information
+- Contact sellers through email
+
+Each listing can contain information such as:
+
+- Brand
+- Model
+- VIN
+- Mileage
+- Color
+- Engine
+- Transmission
+- Description
+- Location
+- Seller
+- Vehicle image
+
+### ❤️ Like System
+
+Users can like vehicle listings.
+
+The system provides:
+
+- Listing like functionality
+- User-specific liked listings
+- Liked listings displayed in the user's profile
+- Relationship-based handling of users and listings
+
+### 🔎 Advanced Filtering
+
+The listing system supports filtering using **django-filter**.
+
+Available filters include:
+
+- Brand
+- Transmission
+- Mileage less than a specified value
+- Model containing a specific keyword
+
+Example:
+
+```text
+Brand
+├── BMW
+├── Mercedes-Benz
+├── Audi
+├── Subaru
+├── Tesla
+├── Jaguar
+├── Land Rover
+├── Bentley
+├── Bugatti
+├── Ferrari
+├── Lamborghini
+├── Honda
+├── Toyota
+├── Chevrolet
+├── Porsche
+└── McLaren
+
+Transmission
+├── Automatic
+└── Manual
+
+Mileage
+└── Less than
+
+Model
+└── Contains
+```
+
+### 📍 Location System
+
+Vehicle listings support structured location information.
+
+The project uses **django-localflavor** and related localization utilities for handling location-specific data and validation.
+
+Listings can contain information such as:
+
+- City
+- State
+- ZIP / Postal Code
+
+This allows vehicle listings to be associated with a specific location rather than storing location information as a simple text field.
+
+### 🆔 UUID-Based Identification
+
+The project uses **UUIDs** for model identification where appropriate instead of relying exclusively on sequential integer IDs.
+
+This provides non-sequential identifiers for resources and creates a more suitable foundation for exposing object identifiers through URLs and application logic.
+
+### 📧 Email Inquiry System
+
+The project includes an integrated email inquiry system using SMTP.
+
+Users can contact a vehicle seller directly from a listing.
+
+The inquiry flow includes:
+
+- AJAX-based request handling
+- CSRF protection
+- Email delivery through SMTP
+- Success and error handling
+- Protection against repeatedly submitting the same inquiry for a listing
+
+### 🛠️ Django Administration
+
+The project includes a customized Django administration interface for managing application data.
+
+The administration panel provides access to core entities such as:
+
+- Users
+- Profiles
+- Vehicle listings
+- Locations
+- Likes
+- Related application data
+
+The Django Admin is used as an internal management interface rather than relying only on the public-facing website.
+
+### 📱 Responsive Frontend
+
+The frontend is built with **Bootstrap 5** and is designed to work across:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+The UI uses Bootstrap's responsive grid system, cards, navigation components, forms, buttons, and utility classes.
+
+---
+
+# 🧱 Technical Architecture
+
+## Backend
+
+The backend is built with:
+
+- **Python**
+- **Django 6.0**
+- Django ORM
+- Django Model Forms
+- Django Signals
+- Django authentication
+- Django Admin
+- django-filter
+- django-localflavor
+- django-crispy-forms
+- crispy-bootstrap5
+- django-environ
+
+### Backend responsibilities
+
+The Django backend handles:
+
+```text
+Authentication
+      ↓
+User / Profile Management
+      ↓
+Listings
+      ↓
+Location Management
+      ↓
+Filtering
+      ↓
+Like System
+      ↓
+Email Inquiries
+      ↓
+Administration
+```
+
+The application logic is handled server-side through Django models, views, forms, authentication, validation, and relationships between application entities.
+
+---
+
+# 🔗 Django Signals
+
+Django Signals are used to keep related user and profile data synchronized.
+
+For example, when a user is created, the corresponding profile can be created automatically through a signal instead of requiring the application to manually create the profile in every registration flow.
+
+Conceptually:
+
+```text
+User Created
+     ↓
+Django Signal
+     ↓
+Profile Created
+     ↓
+User ↔ Profile
+```
+
+This keeps the relationship between authentication data and profile data consistent throughout the application.
+
+---
+
+# 📝 Django Forms
+
+The project uses Django Forms / Model Forms for handling user input and model-backed data.
+
+Forms are responsible for:
+
+- Input validation
+- Cleaning submitted data
+- Mapping user input to Django models
+- Handling listing creation and editing
+- Profile editing
+- Server-side validation
+
+This keeps validation and business rules on the backend instead of relying exclusively on client-side validation.
+
+---
+
+# 🔍 Filtering
+
+Listing filtering is implemented with **django-filter**.
+
+The filtering layer allows users to narrow down vehicle listings based on attributes such as:
+
+```text
+Brand
+Transmission
+Mileage
+Model
+```
+
+For example:
+
+```text
+BMW
++
+Automatic
++
+Mileage < 50,000
++
+Model contains "M"
+```
+
+The filtering system is integrated with Django's ORM rather than filtering only the already-rendered frontend data.
+
+---
+
+# 🖼️ Media & Image Handling
+
+Vehicle listings support image uploads.
+
+The project uses:
+
+- **Pillow** for image processing
+- Django media handling
+- `django-storages` for storage backend integration
+- `boto3` for S3-compatible object storage integration
+
+This provides a foundation for moving uploaded media away from the application server when deploying to a production object-storage service.
+
+---
+
+# 📦 Database
+
+The application is designed to work with relational databases through Django's ORM.
+
+PostgreSQL support is included through:
+
+```text
+psycopg
+psycopg2
+```
+
+The final production database configuration is deployment-dependent and will be documented separately.
+
+The project uses Django migrations for database schema management.
+
+---
+
+# 🌐 Production Stack
+
+The project includes production-oriented dependencies and configuration for deployment, including:
+
+- **Gunicorn** — WSGI application server
+- **WhiteNoise** — static file serving
+- **django-environ** — environment-based configuration
+- **PostgreSQL drivers**
+- **django-storages**
+- **boto3** — object storage integration
+
+Production secrets and environment-specific configuration are intended to be provided through environment variables rather than committed to the repository.
+
+---
+
+# 📚 Main Technologies & Libraries
+
+| Technology / Library | Purpose |
+|---|---|
+| Python | Backend programming language |
+| Django 6.0 | Web framework |
+| Django ORM | Database abstraction and data access |
+| Django Admin | Application administration |
+| Django Signals | Automatic synchronization between related models |
+| Django Forms / Model Forms | Form handling and server-side validation |
+| django-filter | Vehicle listing filtering |
+| django-localflavor | Localized fields and validation |
+| django-crispy-forms | Form rendering |
+| crispy-bootstrap5 | Bootstrap 5 integration for Django Crispy Forms |
+| Pillow | Image processing |
+| django-environ | Environment-based configuration |
+| django-storages | External storage integration |
+| boto3 | AWS/S3-compatible object storage |
+| psycopg | PostgreSQL connectivity |
+| Gunicorn | Production WSGI server |
+| WhiteNoise | Static file serving |
+| Bootstrap 5 | Responsive frontend |
+| SMTP | Email delivery |
+
+---
+
+# 📦 Dependencies
+
+Core project dependencies include:
+
+```text
+Django==6.0
+django-crispy-forms==2.6
+crispy-bootstrap5==2026.3
+django-environ==0.13.0
+django-filter==25.2
+django-localflavor==5.0
+django-storages==1.14.6
+Pillow==12.2.0
+psycopg==3.3.5
+Gunicorn==26.0.0
+whitenoise==6.12.0
+boto3==1.43.5
+```
+
+The complete dependency list is available in:
+
+```text
+requirements.txt
+```
+
+---
+
+# 📁 Project Concepts
+
+The application is centered around several core entities:
+
+```text
+User
+ │
+ └── Profile
+       │
+       ├── Vehicle Listings
+       │
+       └── Liked Listings
+
+Vehicle Listing
+ │
+ ├── Vehicle Information
+ ├── Image
+ ├── Location
+ ├── Seller
+ └── Likes
+```
+
+The exact model relationships and implementation are defined in the Django application.
+
+---
+
+# 🔐 Security Considerations
+
+The project uses Django's built-in security mechanisms, including:
+
+- CSRF protection
+- Django authentication
+- Server-side form validation
+- ORM-based database queries
+- User authentication checks
+- Ownership-based listing management
+- Environment variables for sensitive configuration
+
+Production deployment will additionally use environment-specific security settings such as:
+
+```text
+DEBUG=False
+ALLOWED_HOSTS
+CSRF_TRUSTED_ORIGINS
+Secure cookies
+HTTPS
+Security headers
+```
+
+---
+
+# 🚀 Running the Project
+
+## 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd <project-directory>
+```
+
+## 2. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+## 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## 4. Configure environment variables
+
+Create a `.env` file and configure the required environment variables.
+
+Example:
+
+```env
+SECRET_KEY=your-secret-key
+DEBUG=True
+
+DATABASE_URL=your-database-url
+
+EMAIL_HOST=your-smtp-host
+EMAIL_PORT=587
+EMAIL_HOST_USER=your-email
+EMAIL_HOST_PASSWORD=your-password
+```
+
+Do not commit `.env` or production credentials to GitHub.
+
+## 5. Apply migrations
+
+```bash
+python manage.py migrate
+```
+
+## 6. Create an admin user
+
+```bash
+python manage.py createsuperuser
+```
+
+## 7. Run the development server
+
+```bash
+python manage.py runserver
+```
+
+The application will then be available locally.
+
+---
+
+# 🧪 Testing & Quality Assurance
+
+Before production deployment, the project should be verified through:
+
+- Authentication flows
+- Registration
+- Login / Logout
+- Profile editing
+- Listing creation
+- Listing editing
+- Listing ownership
+- Image upload
+- Filtering
+- Like / Unlike functionality
+- Inquiry email flow
+- Duplicate inquiry prevention
+- Admin functionality
+- Form validation
+- Database migrations
+- Responsive UI
+
+---
+
+# 🗺️ Deployment Roadmap
+
+The production deployment process includes:
+
+```text
+Development
+     ↓
+Backend & Frontend Audit
+     ↓
+Security Hardening
+     ↓
+Database Configuration
+     ↓
+Testing & QA
+     ↓
+Production Server
+     ↓
+Gunicorn
+     ↓
+Static / Media Storage
+     ↓
+HTTPS
+     ↓
+Cloudflare / DNS
+     ↓
+Public Deployment
+```
+
+---
+
+# 📸 Screenshots
+
+Screenshots of the following sections will be added:
+
+- Homepage
+- Vehicle listing page
+- Vehicle detail page
+- User profile
+- Listing creation form
+- Listing editing form
+- Filtering interface
+- Like system
+- Django Admin
+- Responsive mobile interface
+
+---
+
+# 🎯 Project Goals
+
+The project was built to demonstrate practical experience with:
+
+- Django backend development
+- Relational data modeling
+- Authentication and user management
+- Django Signals
+- Django Forms and Model Forms
+- Server-side validation
+- Filtering
+- File and image uploads
+- Email integration
+- Responsive Bootstrap interfaces
+- Django Admin customization
+- Environment-based configuration
+- Production deployment preparation
+
+The goal was not simply to create a CRUD application, but to build a realistic marketplace-style web application with interconnected users, profiles, listings, locations, filtering, likes, media, email communication, and administrative management.
+
+---
+
+# 🇮🇷 فارسی
+
+## معرفی پروژه
+
+**FMS (Tehran Luxury Cars)** یک پلتفرم آگهی و Marketplace برای خرید و فروش خودروهای لوکس و خاص است که با **Django** در Backend و **Bootstrap** در Frontend توسعه داده شده است.
+
+کاربر می‌تواند در سایت ثبت‌نام کند، پروفایل خود را مدیریت کند، آگهی خودرو ایجاد و ویرایش کند، خودروهای موجود را مشاهده و فیلتر کند، آگهی‌های مورد علاقه خود را Like کند و از طریق سیستم ایمیل با فروشنده ارتباط برقرار کند.
+
+تمرکز اصلی پروژه روی پیاده‌سازی یک **Backend واقعی با Django** بوده است و قابلیت‌هایی مانند User/Profile Management، Django Signals، Django Forms، Filtering، UUID، Location، Image Upload، Authentication و Django Admin در آن استفاده شده‌اند.
+
+---
+
+## ✨ قابلیت‌ها
+
+### 👤 کاربران و پروفایل
+
+- ثبت‌نام و ورود کاربران
+- Logout
+- پروفایل اختصاصی کاربران
+- امکان ویرایش پروفایل
+- اتصال خودکار User و Profile با استفاده از **Django Signals**
+- مدیریت آگهی‌های متعلق به کاربر
+- نمایش آگهی‌های Like شده در پروفایل
+
+### 🚗 سیستم آگهی خودرو
+
+کاربران می‌توانند:
+
+- آگهی خودرو ایجاد کنند
+- آگهی خود را ویرایش کنند
+- اطلاعات کامل خودرو را مشاهده کنند
+- تصویر خودرو آپلود کنند
+- مشخصات خودرو را ثبت کنند
+- Location آگهی را مشخص کنند
+- اطلاعات فروشنده را مشاهده کنند
+- برای فروشنده ایمیل ارسال کنند
+
+اطلاعات آگهی شامل مواردی مانند:
+
+- Brand
+- Model
+- VIN
+- Mileage
+- Color
+- Engine
+- Transmission
+- Description
+- Location
+- Seller
+- Image
+
+است.
+
+### ❤️ سیستم Like
+
+کاربران می‌توانند آگهی‌های مورد علاقه خود را Like کنند.
+
+آگهی‌های Like شده در پروفایل کاربر نیز نمایش داده می‌شوند.
+
+### 🔎 فیلتر آگهی‌ها
+
+برای فیلتر کردن آگهی‌ها از **django-filter** استفاده شده است.
+
+فیلترها شامل:
+
+- Brand
+- Transmission
+- Mileage کمتر از مقدار مشخص
+- Model شامل عبارت مشخص
+
+هستند.
+
+Brandهای موجود:
+
+```text
+BMW
+Mercedes-Benz
+Audi
+Subaru
+Tesla
+Jaguar
+Land Rover
+Bentley
+Bugatti
+Ferrari
+Lamborghini
+Honda
+Toyota
+Chevrolet
+Porsche
+McLaren
+```
+
+Transmission:
+
+```text
+Automatic
+Manual
+```
+
+### 📍 سیستم Location
+
+هر آگهی می‌تواند Location مشخص داشته باشد.
+
+اطلاعات Location شامل مواردی مانند:
+
+- City
+- State
+- ZIP / Postal Code
+
+است.
+
+برای قابلیت‌های مربوط به اطلاعات محلی و Validation از **django-localflavor** استفاده شده است.
+
+### 🆔 UUID
+
+در بخش‌هایی از پروژه به‌جای استفاده صرف از IDهای ترتیبی، از **UUID** برای شناسایی Objectها استفاده شده است.
+
+این روش شناسه‌هایی غیرترتیبی ایجاد می‌کند و برای APIها و URLهایی که Object Identifier در آن‌ها نمایش داده می‌شود، ساختار مناسب‌تری فراهم می‌کند.
+
+### 📧 سیستم Email
+
+پروژه دارای سیستم ارسال ایمیل از طریق **SMTP** است.
+
+کاربر می‌تواند مستقیماً از صفحه آگهی برای فروشنده درخواست ارتباط ارسال کند.
+
+این سیستم شامل:
+
+- AJAX Request
+- CSRF Protection
+- SMTP
+- Success / Error Handling
+- جلوگیری از ارسال مجدد درخواست برای یک آگهی
+
+است.
+
+### 🛠️ پنل مدیریت Django
+
+برای مدیریت اطلاعات سایت از **Django Admin** استفاده شده و پنل مدیریت برای موجودیت‌های اصلی پروژه قابل استفاده است.
+
+از طریق پنل می‌توان داده‌هایی مانند:
+
+- Users
+- Profiles
+- Listings
+- Locations
+- Likes
+
+و اطلاعات مرتبط را مدیریت کرد.
+
+### 📱 رابط کاربری Responsive
+
+Frontend با **Bootstrap 5** پیاده‌سازی شده و برای:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+طراحی Responsive دارد.
+
+---
+
+# 🧱 معماری Backend
+
+Backend پروژه با Django توسعه داده شده و مسئولیت‌هایی مانند:
+
+```text
+Authentication
+       ↓
+User / Profile Management
+       ↓
+Vehicle Listings
+       ↓
+Locations
+       ↓
+Filtering
+       ↓
+Likes
+       ↓
+Email Inquiry
+       ↓
+Administration
+```
+
+را مدیریت می‌کند.
+
+در Backend از امکانات اصلی Django مانند:
+
+- Django ORM
+- Models
+- Views
+- Forms
+- Model Forms
+- Signals
+- Authentication
+- Validation
+- Django Admin
+
+استفاده شده است.
+
+---
+
+# 🔗 Django Signals
+
+برای اتصال و هماهنگ نگه داشتن User و Profile از **Django Signals** استفاده شده است.
+
+به‌صورت مفهومی:
+
+```text
+ساخت User
+   ↓
+Django Signal
+   ↓
+ساخت Profile
+   ↓
+User ↔ Profile
+```
+
+به این ترتیب ایجاد Profile به‌صورت خودکار و هماهنگ با ایجاد User انجام می‌شود.
+
+---
+
+# 📝 Django Forms
+
+برای دریافت و Validation اطلاعات کاربران از Django Forms و Model Forms استفاده شده است.
+
+Forms وظیفه دارند:
+
+- دریافت Input
+- Validation
+- Cleaning داده‌ها
+- اتصال داده‌ها به Model
+- ایجاد و ویرایش Listing
+- ویرایش Profile
+
+را انجام دهند.
+
+---
+
+# 🔎 Filtering
+
+فیلتر آگهی‌ها با استفاده از **django-filter** پیاده‌سازی شده است.
+
+کاربر می‌تواند آگهی‌ها را بر اساس:
+
+```text
+Brand
+Transmission
+Mileage
+Model
+```
+
+محدود کند.
+
+Filtering در Backend و با استفاده از Django ORM انجام می‌شود و صرفاً روی داده‌های نمایش داده شده در Frontend اجرا نمی‌شود.
+
+---
+
+# 🖼️ مدیریت تصاویر و Media
+
+آگهی‌های خودرو امکان آپلود تصویر دارند.
+
+در این بخش از:
+
+- Pillow
+- Django Media Handling
+- django-storages
+- boto3
+
+استفاده شده است.
+
+این ساختار امکان استفاده از Object Storage در محیط Production را نیز فراهم می‌کند.
+
+---
+
+# 🗄️ Database
+
+پروژه از Django ORM برای ارتباط با دیتابیس استفاده می‌کند.
+
+برای PostgreSQL نیز Driverهای مورد نیاز در پروژه وجود دارند:
+
+```text
+psycopg
+psycopg2
+```
+
+Schema دیتابیس توسط Django Migrations مدیریت می‌شود.
+
+Database نهایی محیط Production بر اساس شرایط Deployment انتخاب و تنظیم خواهد شد.
+
+---
+
+# 🌐 Production
+
+پروژه از ابزارها و وابستگی‌های مورد نیاز برای آماده‌سازی محیط Production نیز استفاده می‌کند:
+
+- Gunicorn
+- WhiteNoise
+- django-environ
+- PostgreSQL drivers
+- django-storages
+- boto3
+
+اطلاعات حساس و تنظیمات محیط Production نباید داخل Repository قرار بگیرند و از Environment Variables استفاده می‌شود.
+
+---
+
+# 📚 تکنولوژی‌ها و کتابخانه‌ها
+
+| تکنولوژی | کاربرد |
+|---|---|
+| Python | زبان Backend |
+| Django 6.0 | Web Framework |
+| Django ORM | ارتباط با Database |
+| Django Admin | پنل مدیریت |
+| Django Signals | اتصال و هماهنگی Modelها |
+| Django Forms | دریافت و Validation اطلاعات |
+| django-filter | فیلتر آگهی‌ها |
+| django-localflavor | اطلاعات محلی و Validation |
+| django-crispy-forms | مدیریت Rendering فرم‌ها |
+| crispy-bootstrap5 | اتصال Crispy Forms به Bootstrap 5 |
+| Pillow | پردازش تصاویر |
+| django-environ | مدیریت Environment Variables |
+| django-storages | اتصال به Storage خارجی |
+| boto3 | Object Storage / S3 |
+| psycopg | اتصال به PostgreSQL |
+| Gunicorn | Production WSGI Server |
+| WhiteNoise | Static Files |
+| Bootstrap 5 | رابط کاربری Responsive |
+| SMTP | ارسال Email |
+
+---
+
+# 🚀 اجرای پروژه
+
+### ساخت Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### فعال‌سازی در Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### نصب Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### تنظیم Environment Variables
+
+فایل `.env` را ایجاد کرده و مقادیر مورد نیاز پروژه را وارد کنید.
+
+نمونه:
+
+```env
+SECRET_KEY=your-secret-key
+DEBUG=True
+
+DATABASE_URL=your-database-url
+
+EMAIL_HOST=your-smtp-host
+EMAIL_PORT=587
+EMAIL_HOST_USER=your-email
+EMAIL_HOST_PASSWORD=your-password
+```
+
+فایل `.env` و اطلاعات حساس نباید در GitHub قرار بگیرند.
+
+### Migration
+
+```bash
+python manage.py migrate
+```
+
+### ساخت Superuser
+
+```bash
+python manage.py createsuperuser
+```
+
+### اجرای پروژه
+
+```bash
+python manage.py runserver
+```
+
+---
+
+# 🧪 تست و QA
+
+قبل از Deployment نهایی، موارد زیر بررسی خواهند شد:
+
+- Registration
+- Login / Logout
+- Profile Editing
+- Listing Creation
+- Listing Editing
+- Listing Ownership
+- Image Upload
+- Filtering
+- Like / Unlike
+- Email Inquiry
+- جلوگیری از ارسال مجدد Inquiry
+- Admin Panel
+- Form Validation
+- Database Migrations
+- Responsive UI
+
+---
+
+# 🗺️ مسیر Deployment
+
+```text
+Development
+      ↓
+Audit & Debug
+      ↓
+Production Hardening
+      ↓
+Database Configuration
+      ↓
+Testing & QA
+      ↓
+Production Server
+      ↓
+Gunicorn
+      ↓
+Static / Media
+      ↓
+HTTPS
+      ↓
+Cloudflare / DNS
+      ↓
+Public Deployment
+```
+
+---
+
+# 🎯 هدف پروژه
+
+FMS با هدف نمایش تجربه عملی در زمینه‌های زیر توسعه داده شده است:
+
+- توسعه Backend با Django
+- طراحی و ارتباط Modelها
+- Authentication
+- User / Profile Management
+- Django Signals
+- Django Forms
+- Server-side Validation
+- Filtering
+- Image Upload
+- Email Integration
+- Responsive Design
+- Django Admin
+- Environment-based Configuration
+- آماده‌سازی پروژه برای Production
+
+هدف پروژه صرفاً ساخت یک CRUD ساده نبوده است؛ بلکه تلاش شده یک **Marketplace واقعی برای خودروهای لوکس** با کاربران، پروفایل‌ها، آگهی‌ها، Location، Filtering، Like، تصاویر، ارتباط ایمیلی و پنل مدیریت ساخته شود.
+
+---
+
+## 📌 Project Status
+
+**Backend:** Complete  
+**Frontend:** Complete  
+**Core Features:** Complete  
+**Production Audit:** In Progress  
+**Deployment:** Planned  
+**Public Release:** Planned
+
+---
+
+## 👨‍💻 Author
+
+**Mehrshad**
+
+Built as a portfolio project to demonstrate practical Django backend and full-stack web development skills.
