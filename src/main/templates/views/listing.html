@@ -87,7 +87,21 @@
                                 No Phone!
                                 {% endif %}
                             </button>
-                            <button id="sendEmail" class="w-100 btn btn-lg btn-outline-primary">Send Email</button>
+                            <button id="sendEmail" class="w-100 btn btn-lg btn-outline-primary">
+                                {% if has_inquiry %}
+                                Send Again
+                                {% else %}
+                                Send Email
+                                {% endif %}
+                            </button>
+                            <div
+                                id="emailStatus"
+                                class="text-muted text-center mt-2"
+                            >
+                                {% if has_inquiry %}
+                                    Emails sent: {{ email_sent_count }}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,6 +124,7 @@
     $("#sendEmail").click(function () {
 
         let button = $(this);
+        let status = $("#emailStatus");
 
         button.prop("disabled", true);
         button.text("Sending...");
@@ -129,32 +144,64 @@
 
                 if (r.success) {
 
+                    button.prop("disabled", false);
                     button.text("Email Sent!");
 
-                    alert(
-                        "Email sent successfully!\n\n" +
-                        "Please do not send another email for this listing."
+                    status.text(
+                        "Emails sent: " + r.sent_count
                     );
 
-                } else if (r.already_sent) {
-
-                    button.text("Already Sent");
 
                     alert(
-                        "You have already sent an email for this listing.\n\n" +
-                        "Please do not send another email."
+                        "Email sent successfully!"
                     );
+
+                    return;
                 }
+                button.prop("disabled", false);
+                button.text("Send Again");
+
+                alert(r.info);
             },
 
-            error: function (rs, e) {
 
-                button.prop("disabled", false);
-                button.text("Send Email");
+            error: function (rs) {
+            button.prop("disabled", false);
 
+            if (rs.responseJSON) {
+                let r = rs.responseJSON;
+
+                if (r.limit_reached) {
+                    button.prop("disabled", true);
+
+                    if (r.limit_type === "daily") {
+                        button.text("Daily Limit Reached");
+                    }
+                    else if (r.limit_type === "weekly") {
+                        button.text("Weekly Limit Reached");
+                    }
+                    else if (r.limit_type === "listing") {
+                        button.text("Listing Limit Reached");
+                    }
+
+                    status.text(
+                        "Emails sent: " + r.sent_count
+                    );
+
+                    alert(r.info);
+                    return;
+                }
+
+                alert(r.info);
+            }
+            else {
                 alert("Something went wrong!");
             }
+
+            button.text("Send Again");
+        }
         });
     });
 </script>
+
 {% endblock %}

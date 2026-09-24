@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django_filters',
     'main',
     'Users',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -93,7 +94,7 @@ WSGI_APPLICATION = 'tehran_luxery_cars.wsgi.application'
 
 
 # DB
-if env('USEDEBUGDB'):
+if env.bool('USEDEBUGDB'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -102,17 +103,7 @@ if env('USEDEBUGDB'):
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('DBNAME'),
-            'USER': env('DBUSER'),
-            'PASSWORD': env('DBPASSWORD'),
-            'HOST': env('DBHOST'),
-            'PORT': env('DBPORT'),
-            'OPTIONS': {
-                'sslmode': 'require',
-            },
-        }
+        'default': env.db('DATABASE_URL'),
     }
 
 # Password validation
@@ -163,6 +154,26 @@ STATIC_URL = 'static/'
 # Media Files(uploaded Files)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL= '/media/'
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'storages.backends.s3.S3Storage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
+}
+
+# S3
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = env('AWS_S3_ENDPOINT_URL')
+AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')
+
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
 
 # Django Crispy Form Settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

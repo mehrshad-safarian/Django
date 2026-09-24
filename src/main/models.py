@@ -99,7 +99,6 @@ class LikedListing(models.Model):
             f"liked by {self.profile.user.username}"
         )
 
-
 class ListingInquiry(models.Model):
     profile = models.ForeignKey(
         Profile,
@@ -111,7 +110,7 @@ class ListingInquiry(models.Model):
         on_delete=models.CASCADE
     )
 
-    sent_at = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now_add=True
     )
 
@@ -127,4 +126,22 @@ class ListingInquiry(models.Model):
         return (
             f"{self.profile.user.username} "
             f"inquired about {self.listing.model}"
+        )
+
+
+class ListingInquiryAttempt(models.Model):
+    inquiry = models.ForeignKey(
+        ListingInquiry,
+        on_delete=models.CASCADE,
+        related_name='attempts'
+    )
+
+    sent_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return (
+            f"Inquiry attempt for "
+            f"{self.inquiry.listing.model}"
         )

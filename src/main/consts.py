@@ -14,7 +14,8 @@ CARS_BRANDS = (
     ('toyota', 'Toyota'),
     ('chevrolet', 'Chevrolet'),
     ('porsche', 'Porsche'),
-    ('mclaren', 'McLaren')
+    ('mclaren', 'McLaren'),
+    ('aston martin', 'Aston Martin')
 )
 
 TRANSMISSION_OPTIONS = (
