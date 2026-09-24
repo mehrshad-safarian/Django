@@ -40,9 +40,11 @@ EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(env('DEBUG'))
+DEBUG = True if env('DJANGOAPPMODE') == 'Debug' else False
+print(f'Application running in debug mode: {DEBUG}')
 
-ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = []
 
 
 # Application definition
