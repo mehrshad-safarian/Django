@@ -31,7 +31,7 @@ def home_view(request):
     )
 
     user_liked_listings = LikedListing.objects.filter(
-        profile__user=request.user
+        profile=request.user.profile
     ).values_list('listing_id', flat=True)
 
     liked_listings_ids = list(user_liked_listings)
