@@ -32,7 +32,7 @@ SECRET_KEY = env('SECRET_KEY', default='temporary-key-for-build')
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = env('EMAIL_HOST')
+print("EMAIL_HOST FROM ENV:", os.environ.get("EMAIL_HOST"))
 EMAIL_PORT = env.int('EMAIL_PORT')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
