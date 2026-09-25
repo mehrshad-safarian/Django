@@ -44,7 +44,11 @@ DEBUG = True if env('DJANGOAPPMODE') == 'Debug' else False
 print(f'Application running in debug mode: {DEBUG}')
 
 
-ALLOWED_HOSTS = ['127.0.0.1','tehran-luxury-cars.onrender.com']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.onbelmo.io',
+]
 
 
 # Application definition
