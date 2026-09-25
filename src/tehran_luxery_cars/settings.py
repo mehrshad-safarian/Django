@@ -51,6 +51,9 @@ ALLOWED_HOSTS = [
     'tehranluxurycars.blitz.cloud',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://tehranluxurycars.blitz.cloud',
+]
 
 # Application definition
 
