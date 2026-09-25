@@ -47,7 +47,7 @@ print(f'Application running in debug mode: {DEBUG}')
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '.onbelmo.io',
+    '.wasmer.app',
 ]
 
 
