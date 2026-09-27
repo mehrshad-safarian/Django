@@ -14,21 +14,39 @@
 <div class="video-content">
     <!-- Header -->
     <header>
-        <div class="container-fluid px-4">
-            <div class="d-flex justify-content-between align-items-center">
-                <h3 class="mb-0">TehranLuxuryCars</h3>
-                <nav class="nav nav-masthead">
-                    {% if request.user.is_authenticated %}
-                        <a class="nav-link active" href="{% url 'main' %}">Main</a>
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    {% else %}
-                        <a class="nav-link active" href="{% url 'main' %}">Main</a>
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    {% endif %}
-                </nav>
+        <nav class="navbar navbar-expand-md navbar-dark">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center w-100">
+                    <h3 class="mb-0">TehranLuxuryCars</h3>
+                    <button
+                        class="navbar-toggler custom-toggler ms-auto"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mainNavbar">
+                        <nav class="navbar-nav nav-masthead ms-auto text-center">
+                            {% if request.user.is_authenticated %}
+                                <a class="nav-link active" href="{% url 'main' %}">Main</a>
+                                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                                <a class="nav-link active" href="{% url 'main' %}">Main</a>
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
             </div>
-        </div>
+        </nav>
     </header>
 
     <!-- Main -->
@@ -43,16 +61,81 @@
                     Tehran Luxury Cars is Tehran’s premier marketplace for high-end and exotic vehicles.
                 </p>
                 <a href="{% url 'register' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold">Register</a>
+                <p>
+                </p>
+                <p class="lead fs-4 mb-3">
+                    NOTE! :
+                </p>
+                <p class="lead fs-4 mb-3">
+                    You must log in to access vehicle listings.
+                </p>
+                <p class="login-note-fa mb-4">
+                    برای دسترسی به آگهی‌ها، باید وارد حساب کاربری خود شوید!
+                </p>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
     <footer>
-        <div class="container text-center">
-            <p class="mb-0 text-white-50">© Copyright {% now "Y" %} Tehran Luxury Cars. All rights reserved.</p>
-            <p class="mb-0 text-white-50">Designed by Mehrshad</p>
+            <div class="container text-center">
+
+        <!-- Social links -->
+        <div class="social-links mb-3">
+            <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                class="social-link"
+            >
+                <i class="bi bi-instagram"></i>
+            </a>
+
+            <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                class="social-link"
+            >
+                <i class="bi bi-github"></i>
+            </a>
+
+            <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                class="social-link"
+            >
+                <i class="bi bi-youtube"></i>
+            </a>
+
+            <a
+                href="https://x.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X"
+                class="social-link"
+            >
+                <i class="bi bi-twitter-x"></i>
+            </a>
+
+            <a
+                href="https://t.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Telegram"
+                class="social-link"
+            >
+                <i class="bi bi-telegram"></i>
+            </a>
         </div>
+
+        <p class="mb-0 text-white-50">© Copyright {% now "Y" %} Tehran Luxury Cars. All rights reserved.</p>
+        <p class="mb-0 text-white-50">Designed by <a href=""
+                class="text-white">Mehrshad</a></p>
     </footer>
 </div>
 {% endblock %}
