@@ -1,7 +1,7 @@
 #################################
 # Python
 #################################
-pycache/
+__pycache__/
 *.py[cod]
 *.pyo
 *.pyc
@@ -46,3 +46,9 @@ htmlcov/
 #################################
 # PostgreSQL / Backup files
 #################################
+__pycache__/
+*.pyc
+.env
+db.sqlite3
+media/
+staticfiles/
