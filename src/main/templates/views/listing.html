@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block 'title' %}
-<title>TehranLuxuryCars.Listing<!---->Listing
+<title>TehranLuxuryCars.Listing
 </title>
 {% endblock %}
 {% block 'body' %}
@@ -24,35 +24,49 @@
             <h2 class="mb-3 border-bottom" style="color: rgb(0, 0, 0)">Auto Information</h2>
             <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                 <div class="col-lg-8">
-                    <div class="table-responsive">
-                        <table class="table text-center">
-                            <tbody>
-                                <tr>
-                                    <th scope="row" class="text-start">Brand</th>
-                                    <td> {{listing.brand|capfirst }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="text-start">Vin</th>
-                                    <td> {{listing.vin }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="text-start">Milage</th>
-                                    <td> {{listing.milage }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="text-start">Color</th>
-                                    <td> {{listing.color|capfirst }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="text-start">Engine</th>
-                                    <td> {{listing.engine|capfirst }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="text-start">Transmission</th>
-                                    <td> {{listing.transmission|capfirst }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="col-lg-8">
+                        <!-- Full-width container to make the information section larger -->
+                        <div class="col-12"> 
+                            <div class="card mb-4 rounded-3 shadow-sm">
+                                <div class="card-header py-3">
+                                    <h4 class="my-0 fw-bold">Auto Information</h4>
+                                </div>
+                                <!-- List group with flush style to remove outer borders -->
+                                <ul class="list-group list-group-flush">     
+                                    <!-- Each item includes custom bottom border and vertical padding for better spacing -->
+                                    <li class="list-group-item d-flex justify-content-between py-3" style="border-bottom: 1px solid #e0e0e0;">
+                                        <span><strong>Brand</strong></span>
+                                        <span class="text-muted">{{ listing.brand|capfirst }}</span>
+                                    </li>
+                                    
+                                    <li class="list-group-item d-flex justify-content-between py-3" style="border-bottom: 1px solid #e0e0e0;">
+                                        <span><strong>Vin</strong></span>
+                                        <span class="text-muted">{{ listing.vin }}</span>
+                                    </li>
+                                    
+                                    <li class="list-group-item d-flex justify-content-between py-3" style="border-bottom: 1px solid #e0e0e0;">
+                                        <span><strong>Mileage</strong></span>
+                                        <span class="text-muted">{{ listing.milage }}</span>
+                                    </li>
+                                    
+                                    <li class="list-group-item d-flex justify-content-between py-3" style="border-bottom: 1px solid #e0e0e0;">
+                                        <span><strong>Color</strong></span>
+                                        <span class="text-muted">{{ listing.color|capfirst }}</span>
+                                    </li>
+                                    
+                                    <li class="list-group-item d-flex justify-content-between py-3" style="border-bottom: 1px solid #e0e0e0;">
+                                        <span><strong>Engine</strong></span>
+                                        <span class="text-muted">{{ listing.engine|capfirst }}</span>
+                                    </li>
+                                    
+                                    <li class="list-group-item d-flex justify-content-between py-3" style="border-bottom: 1px solid #e0e0e0;">
+                                        <span><strong>Transmission</strong></span>
+                                        <span class="text-muted">{{ listing.transmission|capfirst }}</span>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -62,8 +76,8 @@
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>{{ listing.Location.City }}, {{ listing.Location.State }},
-                                    {{listing.Location.Zip_Code }} </li>
+                                <li>{{ listing.location.City }}, {{ listing.location.State }},
+                                    {{listing.location.Zip_Code }} </li>
                             </ul>
                             <button
                                 class="w-100 btn btn-lg btn-outline-primary my-3">{{listing.seller.phone_number}}</button>
@@ -76,9 +90,9 @@
         <div class="container px-4 py-5">
             <div class="row g-4 py-5">
                 <div class="col d-flex align-items-start">
-                    <div>
+                    <div class="card shadow-sm p-4">
                         <h2 class="mb-3 border-bottom" style="color: black">Description</h2>
-                        <p> {{ listing.description }}</p>
+                        <p class="lead" style="font-size: 1.1rem; line-height: 1.8; "> {{ listing.description }}</p>
                     </div>
                 </div>
             </div>
